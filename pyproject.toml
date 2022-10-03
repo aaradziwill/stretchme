@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "stretchme"
+version = "0.1.0"
+description = ""
+authors = ["aaradziwill <aaradziwill@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+mmpose = "0.20.0"
+jupyter = "^1.0.0"
+mmcv = "1.3.18"
+mmdet = "^2.25.2"
+mmcv-full = "1.4.0"
+
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+ipykernel = "^6.15.1"
+black = "^22.6.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
