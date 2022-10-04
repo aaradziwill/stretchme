@@ -317,17 +317,20 @@ def inference_top_down_pose_model(
 
     return pose_results, returned_outputs
 
-def vis_pose_result(model,
-                    img,
-                    result,
-                    radius=4,
-                    thickness=1,
-                    kpt_score_thr=0.3,
-                    bbox_color='green',
-                    dataset='TopDownCocoDataset',
-                    dataset_info=None,
-                    show=False,
-                    out_file=None):
+
+def vis_pose_result(
+    model,
+    img,
+    result,
+    radius=4,
+    thickness=1,
+    kpt_score_thr=0.3,
+    bbox_color="green",
+    dataset="TopDownCocoDataset",
+    dataset_info=None,
+    show=False,
+    out_file=None,
+):
     """Visualize the detection results on the image.
     Args:
         model (nn.Module): The loaded detector.
@@ -343,15 +346,14 @@ def vis_pose_result(model,
     """
 
     # get dataset info
-    if (dataset_info is None and hasattr(model, 'cfg')
-            and 'dataset_info' in model.cfg):
+    if dataset_info is None and hasattr(model, "cfg") and "dataset_info" in model.cfg:
         dataset_info = DatasetInfo(model.cfg.dataset_info)
 
     skeleton = dataset_info.skeleton
     pose_kpt_color = dataset_info.pose_kpt_color
     pose_link_color = dataset_info.pose_link_color
 
-    if hasattr(model, 'module'):
+    if hasattr(model, "module"):
         model = model.module
 
     img = model.show_result(
@@ -365,7 +367,8 @@ def vis_pose_result(model,
         kpt_score_thr=kpt_score_thr,
         bbox_color=bbox_color,
         show=show,
-        out_file=out_file)
+        out_file=out_file,
+    )
 
     return img
 
@@ -388,7 +391,7 @@ def process_mmdet_results(mmdet_results, cat_id=1):
     person_results = []
     for bbox in bboxes:
         person = {}
-        person['bbox'] = bbox
+        person["bbox"] = bbox
         person_results.append(person)
 
     return person_results
