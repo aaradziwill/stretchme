@@ -1,8 +1,11 @@
 [tool.poetry]
-name = "stretchme"
+name = "stretchme-pose"
 version = "0.1.0"
 description = ""
 authors = ["aaradziwill <aaradziwill@gmail.com>"]
+packages = [
+    {include = "stretchme", from = "src"}
+]
 
 [tool.poetry.dependencies]
 python = "^3.9"

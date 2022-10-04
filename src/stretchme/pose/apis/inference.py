@@ -10,11 +10,11 @@ from mmcv.runner import load_checkpoint
 from mmcv.utils.misc import deprecated_api_warning
 from PIL import Image
 
-from mmpose.core.bbox import bbox_xywh2xyxy, bbox_xyxy2xywh
-from mmpose.datasets.dataset_info import DatasetInfo
-from mmpose.datasets.pipelines import Compose, ToTensor
-from mmpose.models import build_posenet
-from mmpose.utils.hooks import OutputHook
+from src.stretchme.pose.core.bbox import bbox_xywh2xyxy, bbox_xyxy2xywh
+from src.stretchme.pose.datasets.dataset_info import DatasetInfo
+from src.stretchme.pose.datasets.pipelines import Compose, ToTensor
+from src.stretchme.pose.models import build_posenet
+from src.stretchme.pose.utils.hooks import OutputHook
 
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
