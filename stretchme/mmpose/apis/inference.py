@@ -316,3 +316,79 @@ def inference_top_down_pose_model(
         pose_results.append(pose_result)
 
     return pose_results, returned_outputs
+
+def vis_pose_result(model,
+                    img,
+                    result,
+                    radius=4,
+                    thickness=1,
+                    kpt_score_thr=0.3,
+                    bbox_color='green',
+                    dataset='TopDownCocoDataset',
+                    dataset_info=None,
+                    show=False,
+                    out_file=None):
+    """Visualize the detection results on the image.
+    Args:
+        model (nn.Module): The loaded detector.
+        img (str | np.ndarray): Image filename or loaded image.
+        result (list[dict]): The results to draw over `img`
+                (bbox_result, pose_result).
+        radius (int): Radius of circles.
+        thickness (int): Thickness of lines.
+        kpt_score_thr (float): The threshold to visualize the keypoints.
+        skeleton (list[tuple()]): Default None.
+        show (bool):  Whether to show the image. Default True.
+        out_file (str|None): The filename of the output visualization image.
+    """
+
+    # get dataset info
+    if (dataset_info is None and hasattr(model, 'cfg')
+            and 'dataset_info' in model.cfg):
+        dataset_info = DatasetInfo(model.cfg.dataset_info)
+
+    skeleton = dataset_info.skeleton
+    pose_kpt_color = dataset_info.pose_kpt_color
+    pose_link_color = dataset_info.pose_link_color
+
+    if hasattr(model, 'module'):
+        model = model.module
+
+    img = model.show_result(
+        img,
+        result,
+        skeleton,
+        radius=radius,
+        thickness=thickness,
+        pose_kpt_color=pose_kpt_color,
+        pose_link_color=pose_link_color,
+        kpt_score_thr=kpt_score_thr,
+        bbox_color=bbox_color,
+        show=show,
+        out_file=out_file)
+
+    return img
+
+
+def process_mmdet_results(mmdet_results, cat_id=1):
+    """Process mmdet results, and return a list of bboxes.
+    Args:
+        mmdet_results (list|tuple): mmdet results.
+        cat_id (int): category id (default: 1 for human)
+    Returns:
+        person_results (list): a list of detected bounding boxes
+    """
+    if isinstance(mmdet_results, tuple):
+        det_results = mmdet_results[0]
+    else:
+        det_results = mmdet_results
+
+    bboxes = det_results[cat_id - 1]
+
+    person_results = []
+    for bbox in bboxes:
+        person = {}
+        person['bbox'] = bbox
+        person_results.append(person)
+
+    return person_results
