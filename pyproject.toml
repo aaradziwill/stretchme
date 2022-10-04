@@ -6,10 +6,9 @@ authors = ["aaradziwill <aaradziwill@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
-mmpose = "0.20.0"
 jupyter = "^1.0.0"
-mmcv = "1.3.18"
 mmdet = "^2.25.2"
+mmcv = "1.3.18"
 mmcv-full = "1.4.0"
 
 
